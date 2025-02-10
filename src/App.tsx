@@ -8,6 +8,7 @@ import '../global.css';
 import {View, Text, StyleSheet} from 'react-native';
 import React, {StrictMode} from 'react';
 import Footer from './components/Footer';
+import ImageHere from './components/ImageHere';
 import {LoadingProvider} from './Context/LoadingContext';
 
 function Providers({children}: {children: React.ReactNode}) {
@@ -22,6 +23,7 @@ export default function App() {
   return (
     <Providers>
       <View className="flex-1 justify-end">
+        <ImageHere />
         <Footer />
       </View>
     </Providers>
