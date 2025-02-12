@@ -15,7 +15,10 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 
 export default function Footer() {
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<(string | undefined)[]>([
+    undefined,
+    undefined,
+  ]);
   const rotation = useSharedValue(0);
 
   const requestPermissionAndLoad = async () => {
@@ -91,19 +94,15 @@ export default function Footer() {
       <TouchableOpacity
         onPress={async () => launchImageLibrary({mediaType: 'photo'}, () => {})}
         className="absolute right-9 aspect-square w-[45px]">
-        {images.length > 0 && (
-          <Image
-            source={{uri: images[0]}}
-            className="absolute left-0 bottom-0 bg-red-300 rounded-md aspect-square w-[45px] z-10"
-          />
-        )}
-        {images.length > 1 && (
-          <Animated.Image
-            source={{uri: images[1]}}
-            className="bg-violet-300 rounded-md aspect-square w-[45px] z-0"
-            style={animatedStyle}
-          />
-        )}
+        <Image
+          source={{uri: images[0]}}
+          className="absolute bg-red-300 bg-opacity-50 rounded-md aspect-square w-[45px] z-10"
+        />
+        <Animated.Image
+          source={{uri: images[1]}}
+          className="bg-violet-300 bg-opacity-50 rounded-md aspect-square w-[45px] z-0"
+          style={animatedStyle}
+        />
       </TouchableOpacity>
     </View>
   );
