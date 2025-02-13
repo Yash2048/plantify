@@ -4,6 +4,7 @@ import {
   Image,
   Platform,
   PermissionsAndroid,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Animated, {
@@ -73,6 +74,18 @@ export default function Footer() {
     rotation.value = withSpring(10);
   }, []);
 
+  const selectImage = async () => {
+    const response = await launchImageLibrary({mediaType: 'photo'});
+
+    if (response.didCancel) {
+      return;
+    } else if (response.errorMessage) {
+      Alert.alert('Image Selection Error', response.errorMessage);
+    } else if (response.assets && response.assets.length > 0) {
+      Alert.alert('Selected Image', response.assets[0].uri || 'No URI found');
+    }
+  };
+
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
       {translateY: 45},
@@ -92,7 +105,7 @@ export default function Footer() {
         />
       </View>
       <TouchableOpacity
-        onPress={async () => launchImageLibrary({mediaType: 'photo'}, () => {})}
+        onPress={selectImage}
         className="absolute right-9 aspect-square w-[45px]">
         <Image
           source={{uri: images[0]}}
