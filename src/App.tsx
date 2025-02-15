@@ -5,11 +5,9 @@
  * @format
  */
 import '../global.css';
-import {View, Text, StyleSheet} from 'react-native';
 import React, {StrictMode} from 'react';
-import Footer from './components/Footer';
-import ImageHere from './components/ImageHere';
 import {LoadingProvider} from './Context/LoadingContext';
+import Home from './screens/Home';
 
 function Providers({children}: {children: React.ReactNode}) {
   return (
@@ -22,10 +20,7 @@ function Providers({children}: {children: React.ReactNode}) {
 export default function App() {
   return (
     <Providers>
-      <View className="flex-1 justify-end">
-        <ImageHere />
-        <Footer />
-      </View>
+      <Home />
     </Providers>
   );
 }
