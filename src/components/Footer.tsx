@@ -15,7 +15,11 @@ import Animated, {
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 
-export default function Footer() {
+export default function Footer({
+  setImage,
+}: {
+  setImage: (image: string) => void;
+}) {
   const [images, setImages] = useState<(string | undefined)[]>([
     undefined,
     undefined,
@@ -75,17 +79,41 @@ export default function Footer() {
   }, []);
 
   const selectImage = async () => {
-    const response = await launchImageLibrary({mediaType: 'photo'});
+    const response = await launchImageLibrary({
+      mediaType: 'photo',
+      selectionLimit: 1,
+    });
 
     if (response.didCancel) {
       return;
     } else if (response.errorMessage) {
       Alert.alert('Image Selection Error', response.errorMessage);
     } else if (response.assets && response.assets.length > 0) {
-      Alert.alert('Selected Image', response.assets[0].uri || 'No URI found');
+      console.log(response.assets);
+      if (response.assets[0].uri) {
+        setImage(response.assets[0].uri);
+      }
+      // Alert.alert('Selected Image', response.assets[0].uri);
     }
   };
 
+  const captureImage = async () => {
+    const response = await launchCamera({
+      mediaType: 'photo',
+      cameraType: 'back',
+    });
+    if (response.didCancel) {
+      return;
+    } else if (response.errorMessage) {
+      console.log('Camera Error', response.errorMessage);
+      Alert.alert('Camera Error', response.errorMessage);
+    } else if (response.assets && response.assets.length > 0) {
+      console.log(response.assets);
+      if (response.assets[0].uri) {
+        setImage(response.assets[0].uri);
+      }
+    }
+  };
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
       {translateY: 45},
@@ -96,15 +124,16 @@ export default function Footer() {
 
   return (
     <View className="flex items-center justify-center h-20 bg-gray-800">
-      <View className="flex justify-center items-center rounded-full w-[60px] h-[60px] border-gray-200 border-[2px]">
+      <View
+        id="camera_button"
+        className="flex justify-center items-center rounded-full w-[60px] h-[60px] border-gray-200 border-[2px]">
         <TouchableOpacity
-          onPress={async () =>
-            await launchCamera({mediaType: 'photo'}, () => {})
-          }
+          onPress={captureImage}
           className="bg-gray-400 rounded-full w-[50px] h-[50px]"
         />
       </View>
       <TouchableOpacity
+        id="image_selector"
         onPress={selectImage}
         className="absolute right-9 aspect-square w-[45px]">
         <Image
