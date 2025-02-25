@@ -1,6 +1,9 @@
 import {View, Image, TouchableOpacity, Alert} from 'react-native';
 import React from 'react';
+
+import {useData} from '../Context/DataContext';
 import {API_URL} from '../../env.json';
+
 export default function Menu({
   setImage,
   setUploading,
@@ -8,12 +11,16 @@ export default function Menu({
   setImage: (image: string | undefined) => void;
   setUploading: (uploading: boolean) => void;
 }) {
+  const {setData, data} = useData();
+
   async function upload() {
     try {
       setUploading(true);
       const res = await fetch(API_URL);
-      const data = await res.json();
-      Alert.alert('title', data.message);
+      const obj = await res.json();
+      Alert.alert('title', obj.message);
+      setData(obj);
+      console.log(data);
       setUploading(false);
     } catch (error: any) {
       Alert.alert('title', error.message);

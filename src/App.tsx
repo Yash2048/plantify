@@ -11,11 +11,14 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Home from './screens/Home';
 import PlantDetails from './screens/PlantDetails';
+import {DataProvider} from './Context/DataContext';
 
 function Providers({children}: {children: React.ReactNode}) {
   return (
     <StrictMode>
-      <NavigationContainer>{children}</NavigationContainer>
+      <DataProvider>
+        <NavigationContainer>{children}</NavigationContainer>
+      </DataProvider>
     </StrictMode>
   );
 }
