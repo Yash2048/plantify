@@ -6,11 +6,12 @@ import Menu from '../components/Menu';
 
 export default function Home() {
   const [image, setImage] = useState<string | undefined>(undefined);
+  const [uploading, setUploading] = useState(false);
   return (
     <>
       <ScrollView contentContainerClassName="flex-grow ">
-        <ImageHere image={image} />
-        {image && <Menu setImage={setImage} />}
+        <ImageHere uploading={uploading} image={image} />
+        {image && <Menu setUploading={setUploading} setImage={setImage} />}
       </ScrollView>
       <Footer setImage={setImage} />
     </>
