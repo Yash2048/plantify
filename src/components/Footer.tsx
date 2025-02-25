@@ -89,7 +89,6 @@ export default function Footer({
     } else if (response.errorMessage) {
       Alert.alert('Image Selection Error', response.errorMessage);
     } else if (response.assets && response.assets.length > 0) {
-      console.log(response.assets);
       if (response.assets[0].uri) {
         setImage(response.assets[0].uri);
       }
@@ -105,10 +104,8 @@ export default function Footer({
     if (response.didCancel) {
       return;
     } else if (response.errorMessage) {
-      console.log('Camera Error', response.errorMessage);
       Alert.alert('Camera Error', response.errorMessage);
     } else if (response.assets && response.assets.length > 0) {
-      console.log(response.assets);
       if (response.assets[0].uri) {
         setImage(response.assets[0].uri);
       }
