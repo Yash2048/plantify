@@ -6,21 +6,30 @@
  */
 import '../global.css';
 import React, {StrictMode} from 'react';
-import {LoadingProvider} from './Context/LoadingContext';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
 import Home from './screens/Home';
+import PlantDetails from './screens/PlantDetails';
 
 function Providers({children}: {children: React.ReactNode}) {
   return (
     <StrictMode>
-      <LoadingProvider>{children}</LoadingProvider>
+      <NavigationContainer>{children}</NavigationContainer>
     </StrictMode>
   );
 }
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <Providers>
-      <Home />
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Details" component={PlantDetails} />
+      </Stack.Navigator>
     </Providers>
   );
 }
