@@ -5,12 +5,12 @@ import {useState} from 'react';
 import Menu from '../components/Menu';
 
 export default function Home() {
-  const [image, setImage] = useState<string>('');
+  const [image, setImage] = useState<string | undefined>(undefined);
   return (
     <>
       <ScrollView contentContainerClassName="flex-grow ">
         <ImageHere image={image} />
-        <Menu />
+        {image && <Menu setImage={setImage} />}
       </ScrollView>
       <Footer setImage={setImage} />
     </>

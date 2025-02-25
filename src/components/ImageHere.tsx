@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {View, Image, Text} from 'react-native';
 
-export default function ResponsiveImage({image}: {image: string}) {
+export default function ResponsiveImage({image}: {image: string | undefined}) {
   const [aspectRatio, setAspectRatio] = useState(1);
 
   useEffect(() => {
-    if (image !== '') {
+    if (image) {
       Image.getSize(
         image,
         (width, height) => setAspectRatio(width / height),
@@ -14,7 +14,7 @@ export default function ResponsiveImage({image}: {image: string}) {
     }
   }, [image]);
   /*  */
-  if (image === '') {
+  if (!image) {
     return (
       <View className="m-auto self-center border-dashed rounded-3xl border-4 border-gray-300 h-[55%] w-[80%] ">
         <Text className="text-center m-auto text-gray-400 text-2xl px-8">
