@@ -16,7 +16,9 @@ export default function Home() {
     <>
       <ScrollView contentContainerClassName="flex-grow ">
         <ImageHere uploading={uploading} image={image} />
-        {image && <Menu setUploading={setUploading} setImage={setImage} />}
+        {image && (
+          <Menu image={image} setUploading={setUploading} setImage={setImage} />
+        )}
       </ScrollView>
       <Footer setImage={setImage} />
     </>

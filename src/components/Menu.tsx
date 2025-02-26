@@ -13,9 +13,11 @@ type RootStackParamList = {
 };
 
 export default function Menu({
+  image,
   setImage,
   setUploading,
 }: {
+  image: Asset | undefined;
   setImage: (image: Asset | undefined) => void;
   setUploading: (uploading: boolean) => void;
 }) {
@@ -25,8 +27,18 @@ export default function Menu({
 
   async function upload() {
     try {
+      const form = new FormData();
+      form.append('file', {
+        uri: image?.uri,
+        type: image?.type,
+        name: image?.fileName,
+      });
+
       setUploading(true);
-      const res = await fetch(API_URL);
+      const res = await fetch(API_URL + '/upload', {
+        method: 'POST',
+        body: form,
+      });
       const obj = await res.json();
       Alert.alert('title', obj.message);
       setData(obj);
@@ -35,6 +47,7 @@ export default function Menu({
       navigation.navigate('Details');
     } catch (error: any) {
       Alert.alert('title', error.message);
+      console.log(error);
     }
   }
   const cross = async () => {
