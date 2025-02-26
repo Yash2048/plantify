@@ -6,20 +6,21 @@ import {
   ActivityIndicator,
   ImageBackground,
 } from 'react-native';
+import {Asset} from 'react-native-image-picker';
 
 export default function ResponsiveImage({
   image,
   uploading,
 }: {
-  image: string | undefined;
+  image: Asset | undefined;
   uploading: boolean;
 }) {
   const [aspectRatio, setAspectRatio] = useState(1);
 
   useEffect(() => {
-    if (image) {
+    if (image && image.uri) {
       Image.getSize(
-        image,
+        image.uri,
         (width, height) => setAspectRatio(width / height),
         error => console.error("Couldn't get image size", error),
       );
@@ -42,7 +43,7 @@ export default function ResponsiveImage({
   return (
     <View className="m-auto self-center border-dotted rounded-xl border-4 border-gray-400  w-[80%] ">
       <ImageBackground
-        source={{uri: image}}
+        source={{uri: image.uri}}
         className="flex justify-center items-center"
         imageClassName="flex  w-full rounded-xl "
         style={{aspectRatio}}

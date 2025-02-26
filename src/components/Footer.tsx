@@ -12,14 +12,14 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {
+  Asset,
+  launchCamera,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 
-export default function Footer({
-  setImage,
-}: {
-  setImage: (image: string) => void;
-}) {
+export default function Footer({setImage}: {setImage: (image: Asset) => void}) {
   const [images, setImages] = useState<(string | undefined)[]>([
     undefined,
     undefined,
@@ -90,7 +90,7 @@ export default function Footer({
       Alert.alert('Image Selection Error', response.errorMessage);
     } else if (response.assets && response.assets.length > 0) {
       if (response.assets[0].uri) {
-        setImage(response.assets[0].uri);
+        setImage(response.assets[0]);
       }
       // Alert.alert('Selected Image', response.assets[0].uri);
     }
@@ -107,7 +107,7 @@ export default function Footer({
       Alert.alert('Camera Error', response.errorMessage);
     } else if (response.assets && response.assets.length > 0) {
       if (response.assets[0].uri) {
-        setImage(response.assets[0].uri);
+        setImage(response.assets[0]);
       }
     }
   };

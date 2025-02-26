@@ -5,6 +5,7 @@ import {useData} from '../Context/DataContext';
 import {API_URL} from '../../env.json';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {Asset} from 'react-native-image-picker';
 
 type RootStackParamList = {
   Home: undefined;
@@ -15,7 +16,7 @@ export default function Menu({
   setImage,
   setUploading,
 }: {
-  setImage: (image: string | undefined) => void;
+  setImage: (image: Asset | undefined) => void;
   setUploading: (uploading: boolean) => void;
 }) {
   const {setData, data} = useData();
