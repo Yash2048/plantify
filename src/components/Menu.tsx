@@ -3,6 +3,13 @@ import React from 'react';
 
 import {useData} from '../Context/DataContext';
 import {API_URL} from '../../env.json';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+  Home: undefined;
+  Details: undefined;
+};
 
 export default function Menu({
   setImage,
@@ -12,6 +19,8 @@ export default function Menu({
   setUploading: (uploading: boolean) => void;
 }) {
   const {setData, data} = useData();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   async function upload() {
     try {
@@ -22,6 +31,7 @@ export default function Menu({
       setData(obj);
       console.log(data);
       setUploading(false);
+      navigation.navigate('Details');
     } catch (error: any) {
       Alert.alert('title', error.message);
     }
