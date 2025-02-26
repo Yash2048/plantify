@@ -28,7 +28,7 @@ export default function Menu({
   async function upload() {
     try {
       const form = new FormData();
-      form.append('file', {
+      form.append('image', {
         uri: image?.uri,
         type: image?.type,
         name: image?.fileName,
@@ -41,8 +41,8 @@ export default function Menu({
       });
       const obj = await res.json();
       Alert.alert('title', obj.message);
-      setData(obj);
-      console.log(data);
+      setData(obj.plant);
+      console.log(obj);
       setUploading(false);
       navigation.navigate('Details');
     } catch (error: any) {
