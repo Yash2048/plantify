@@ -1,4 +1,4 @@
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, ScrollView} from 'react-native';
 import React from 'react';
 import {useData} from '../Context/DataContext';
 
@@ -18,7 +18,7 @@ export default function PlantDetails() {
     'utility',
     'common_diseases_and_pests',
   ];
-  console.log(keys);
+  // console.log(keys);
   // const data = [
   //   { id: '1', title: 'Item 1' },
   //   { id: '2', title: 'Item 2' },
@@ -26,7 +26,7 @@ export default function PlantDetails() {
   // ];
 
   return (
-    <View>
+    <ScrollView>
       {keys.map(key => {
         return (
           <View key={key} className=" m-1 h-fit">
@@ -37,6 +37,6 @@ export default function PlantDetails() {
           </View>
         );
       })}
-    </View>
+    </ScrollView>
   );
 }

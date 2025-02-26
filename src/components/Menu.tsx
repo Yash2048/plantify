@@ -35,14 +35,15 @@ export default function Menu({
       });
 
       setUploading(true);
-      const res = await fetch(API_URL + '/upload', {
+      const res = await fetch(API_URL, {
         method: 'POST',
         body: form,
       });
       const obj = await res.json();
-      Alert.alert('title', obj.message);
-      setData(obj.plant);
-      console.log(obj);
+      Alert.alert('title', 'Image uploaded successfully');
+      setData(obj.result[0]);
+      console.log(obj.result[0]);
+      console.log(typeof obj.result);
       setUploading(false);
       navigation.navigate('Details');
     } catch (error: any) {
