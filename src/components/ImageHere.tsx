@@ -5,15 +5,19 @@ import {
   Text,
   ActivityIndicator,
   ImageBackground,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
-import {Asset} from 'react-native-image-picker';
+import {Asset, launchImageLibrary} from 'react-native-image-picker';
 
 export default function ResponsiveImage({
   image,
   uploading,
+  setImage,
 }: {
   image: Asset | undefined;
   uploading: boolean;
+  setImage: (image: Asset | undefined) => void;
 }) {
   const [aspectRatio, setAspectRatio] = useState(1);
 
@@ -29,30 +33,49 @@ export default function ResponsiveImage({
   /*  */
 
   if (!image) {
+    const selectImage = async () => {
+      const response = await launchImageLibrary({
+        mediaType: 'photo',
+        selectionLimit: 1,
+      });
+
+      if (response.didCancel) {
+        return;
+      } else if (response.errorMessage) {
+        Alert.alert('Image Selection Error', response.errorMessage);
+      } else if (response.assets && response.assets.length > 0) {
+        if (response.assets[0].uri) {
+          setImage(response.assets[0]);
+        }
+        // Alert.alert('Selected Image', response.assets[0].uri);
+      }
+    };
+
     return (
       <View className="m-auto self-center border-dashed rounded-3xl border-4 border-gray-300 h-[55%] w-[80%] ">
-        <Text className="text-center m-auto text-gray-400 text-2xl px-8">
-          Put Your Plant Leaf
-          {'\n'}
-          <Text className="font-black text-gray-600">HERE!!</Text>
-        </Text>
+        <TouchableOpacity onPress={selectImage} className="self-center m-auto">
+          <Text className="text-center self-center m-auto text-gray-400 text-2xl px-8">
+            Put Your Plant
+            {'\n'}
+            <Text className="font-black text-gray-600">HERE!!</Text>
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
 
   return (
-    <View className="m-auto self-center border-dotted rounded-xl border-4 border-gray-400  w-[80%] ">
+    <View className="m-auto self-center border-solid rounded-xl border-4 border-gray-400  w-[80%] ">
       <ImageBackground
         source={{uri: image.uri}}
-        className="flex justify-center items-center"
-        imageClassName="flex  w-full rounded-xl "
+        imageClassName="flex  w-full  -z-10"
         style={{aspectRatio}}
         resizeMode="contain">
         {uploading && (
           <ActivityIndicator
             size={'large'}
             style={{transform: [{scale: 1.5}]}}
-            className="self-center center"
+            className="self-center center m-auto"
           />
         )}
       </ImageBackground>

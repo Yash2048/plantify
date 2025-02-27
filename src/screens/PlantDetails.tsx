@@ -23,7 +23,6 @@ export default function PlantDetails() {
   const containerStyle = ' bg-gray-500';
   return (
     <ScrollView className="bg-slate-300">
-      <View />
       {keys.map(key => {
         if (key === 'description' || key === 'utility') {
           return (
