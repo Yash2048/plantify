@@ -18,33 +18,33 @@ export default function PlantDetails() {
     'description',
     'utility',
   ];
-  // console.log(keys);
-  // const data = [
-  //   { id: '1', title: 'Item 1' },
-  //   { id: '2', title: 'Item 2' },
-  //   { id: '3', title: 'Item 3' },
-  // ];
 
+  const textStyle = ' text-blue-200';
+  const containerStyle = ' bg-gray-500';
   return (
     <ScrollView className="bg-slate-300">
+      <View />
       {keys.map(key => {
         if (key === 'description' || key === 'utility') {
           return (
-            <View key={key} className=" m-1 bg-slate-500 rounded-lg p-1">
+            <View key={key} className={' m-1 rounded-lg p-1' + containerStyle}>
               <Text className="text-3xl self-center font-black  ">
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </Text>
-              <Text className="text-xl text-blue-200 font-extrabold text-center">
+              <Text
+                className={'text-xl font-extrabold text-center' + textStyle}>
                 {(data as any)[key]}
               </Text>
             </View>
           );
         } else {
           return (
-            <View key={key} className=" m-1 bg-slate-500 rounded-lg p-1">
-              <Text className="text-lg text-blue-200">
-                <Text className="text-xl font-extrabold text-black">{key}</Text>
-                : {(data as any)[key]}
+            <View key={key} className={' m-1 rounded-lg p-1' + containerStyle}>
+              <Text className={'text-lg font-semibold ' + textStyle}>
+                <Text className="text-xl font-extrabold text-black">
+                  {key}:{' '}
+                </Text>
+                {(data as any)[key]}
               </Text>
             </View>
           );
