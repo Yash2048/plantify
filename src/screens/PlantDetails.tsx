@@ -14,9 +14,9 @@ export default function PlantDetails() {
     'leaf_shape',
     'leaf_margin_edge',
     'leaf_division',
+    'common_diseases_and_pests',
     'description',
     'utility',
-    'common_diseases_and_pests',
   ];
   // console.log(keys);
   // const data = [
@@ -26,16 +26,29 @@ export default function PlantDetails() {
   // ];
 
   return (
-    <ScrollView>
+    <ScrollView className="bg-slate-300">
       {keys.map(key => {
-        return (
-          <View key={key} className=" m-1 h-fit">
-            <Text className="text-lg">
-              <Text className="text-xl font-extrabold">{key}</Text>:{' '}
-              {(data as any)[key]}
-            </Text>
-          </View>
-        );
+        if (key === 'description' || key === 'utility') {
+          return (
+            <View key={key} className=" m-1 bg-slate-500 rounded-lg p-1">
+              <Text className="text-3xl self-center font-black  ">
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </Text>
+              <Text className="text-xl text-blue-200 font-extrabold text-center">
+                {(data as any)[key]}
+              </Text>
+            </View>
+          );
+        } else {
+          return (
+            <View key={key} className=" m-1 bg-slate-500 rounded-lg p-1">
+              <Text className="text-lg text-blue-200">
+                <Text className="text-xl font-extrabold text-black">{key}</Text>
+                : {(data as any)[key]}
+              </Text>
+            </View>
+          );
+        }
       })}
     </ScrollView>
   );
