@@ -45,6 +45,11 @@ export default function Menu({
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        onUploadProgress: progressEvent => {
+          if (progressEvent.loaded === progressEvent.total) {
+            Alert.alert('Upload complete', 'Wait for the response.');
+          }
+        },
       });
 
       const obj = response.data;
@@ -52,7 +57,6 @@ export default function Menu({
         throw new Error('Invalid response from server');
       }
 
-      Alert.alert('Success', 'Image uploaded successfully');
       setData(obj.result[0]);
       console.log(obj.result[0]);
       setUploading(false);
@@ -90,13 +94,13 @@ export default function Menu({
       <TouchableOpacity id="cross" onPress={cross}>
         <Image
           className="max-h-full mx-5 my-auto"
-          source={require('../assets/img/cross.webp')}
+          source={require('../assets/img/close.png')}
         />
       </TouchableOpacity>
       <TouchableOpacity id="check" onPress={upload}>
         <Image
           className="max-h-full mx-5 my-auto"
-          source={require('../assets/img/check.webp')}
+          source={require('../assets/img/upload.png')}
         />
       </TouchableOpacity>
     </View>
